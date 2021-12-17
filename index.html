@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html>
-	<head>		
+	<head>	
+		<title>目標熱量計算</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="description" content="啾蒂煩惱於能吃多少食物能跑完全馬不痛以及健康吃健康瘦理念製作的計算菜單">
+		<style>
+			table, th, td {
+			  border: 1px solid black;
+			  border-collapse: collapse;
+			}	
+		</style>
 	</head>
-	<style>
-	table, th, td {
-	  border: 1px solid black;
-	  border-collapse: collapse;
-	}	
-	</style>
 	<body>	
 		<table> 
 			<tr>
-				<td>BMR</td>
+				<td>基礎代謝(BMR)</td>
 				<td> 
 					<input type="text" id="txt_bmr" name="txt_bmr" value="" style="background-color:#FFD382;">					
 				</td>
-				<td>TDEE</td>
+				<td>每日總消耗熱量(TDEE)</td>
 				<td>
 					<input type="text" id="txt_tdee" name="txt_tdee" value="" style="background-color:#FFD382;">					
 					<div id="div_tdee" style="background-color:#FFD382;"></div>
@@ -97,6 +100,8 @@
 				<td><div id="div_pot_cal"></div></td>
 			</tr>
 		</table>
+		<br />
+		<div class="notranslate" contenteditable="true" spellcheck="true" placeholder=" " data-content-editable-leaf="true" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;">醣(C) → 脂肪(F) → 蛋白質(P)</div>
 	</body>
 </html>
 <script>	
@@ -183,6 +188,5 @@
 		document.getElementById("div_cho_cal").innerHTML = ((TDEE * c_rt)/4).toFixed(2);
 		document.getElementById("div_fat_cal").innerHTML = ((TDEE * f_rt)/9).toFixed(2);
 		document.getElementById("div_pot_cal").innerHTML = (goal_p_cal/4).toFixed(2);
-	}
-	
+	}	
 </script>
