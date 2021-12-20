@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html>
-	<head>	
-		<!-- Required meta tags -->
-    		<meta charset="utf-8">
-    		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="啾蒂煩惱於能吃多少食物能跑完全馬不痛以及健康吃健康瘦理念製作的計算菜單">
+	<head>			
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="啾蒂煩惱於要吃多少食物可以跑完全馬不痛；運動人該怎麼吃才夠力氣訓練進步。健康吃健康瘦理念製作的計算機">
 
-    		<!-- Bootstrap CSS -->
-    		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-		
-		<title>目標熱量計算</title>
-		
-	</head>
-	<body>	
+    	<!-- Bootstrap CSS -->
+    	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+		<!-- Bootstrap Javascript -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+		<title>目標熱量計算機</title>		
+		<style>
+			body{
+				padding: 10px 50px 50px 30px;
+			}			
+		</style>
+	</head>
+	<body>		
 
 		<h1>目標熱量計算</h1>
 		
@@ -78,7 +81,9 @@
 				<td colspan="4"><center><input type="button" id="btn_calculate" name="btn_calculate" value="計算" onclick="calculate()"></center></td>
 			</tr>
 		</table>
+		
 		<br/>		
+		
 		<table class="table table-striped table-xs">
 			<tr>
 				<td></td>
@@ -161,37 +166,54 @@ Ion Water</div><div style="position: absolute; right: 0px; width: 0px; top: 0px;
 	</body>
 </html>
 <script>	
-	var c_cal = 4; 
-	var p_cal = 4;
-	var f_cal = 9;
-	
-	var c_rt = 0.4;
-	var p_rt = 0.3;
-	var f_rt = 0.3;
-	
-	var BMR;
-	var TDEE;
+	//蛋白質與體重的比例
 	var protein = 1.6;
 	
-	function calculate(){	
-		//身高
-		var height = document.getElementById("txt_height").value;
-		//體重
-		var weight = document.getElementById("txt_weight").value;
-		//年齡
-		var age = document.getElementById("txt_age").value;
-		//性別
-		var gender = document.querySelector('input[name="rdo_gender"]:checked').value;
-		//活動度
-		var activity_level = document.querySelector('input[name="rdo_activity_level"]:checked').value;
-		//目標
-		var goal = document.querySelector('input[name="rdo_goal"]:checked').value;
-		//基礎代謝
-		BMR = 9.99*weight+6.25*height-4.92*age+(166*gender)-161;
-		//每日總消耗熱量
-		TDEE = BMR*activity_level;		
+	// 營養素卡路里
+	var calories = new Object();
+	calories.carbohydrate = 4; 
+	calories.protein = 4;
+	calories.fat = 9;
+	// 蛋白質攝取量
+	calories.goal_protein_cal = 2000;
+	
+	// 營養素比例
+	var calories_rt = new Object();
+	calories_rt.carbohydrate = 0.4; 
+	calories_rt.protein = 0.3;
+	calories_rt.fat = 0.3;
+	
+	var body_info = new Object();
+	// 身高
+	body_info.height = 1;
+	// 體重
+	body_info.weight = 1;
+	// 年齡
+	body_info.age = 1;       
+	// 性別
+	body_info.gender = 0;    
+	//活動度
+	body_info.activity_level = 1;
+	//目標
+	body_info.goal = 1;
+	body_info.BMR = 1;
+	body_info.TDEE = 1;
+	
+	function calculate(){			
+		body_info.height = document.getElementById("txt_height").value;		
+		body_info.weight = document.getElementById("txt_weight").value;		
+		body_info.age = document.getElementById("txt_age").value;		
+		body_info.gender = document.querySelector('input[name="rdo_gender"]:checked').value;
+		body_info.activity_level = document.querySelector('input[name="rdo_activity_level"]:checked').value;		
+		body_info.goal = document.querySelector('input[name="rdo_goal"]:checked').value;
 		
-		switch (activity_level) {
+		//基礎代謝
+		body_info.BMR = 9.99 * body_info.weight + 6.25 * body_info.height - 4.92 * body_info.age + (166 * body_info.gender) - 161;
+		
+		//每日總消耗熱量
+		body_info.TDEE = body_info.BMR * body_info.activity_level;		
+		
+		switch (body_info.activity_level) {
 		  case "1.2": //幾乎不運動
 			protein = 1;
 			break;
@@ -210,39 +232,38 @@ Ion Water</div><div style="position: absolute; right: 0px; width: 0px; top: 0px;
 		  default:
 			protein = 1.6;
 			break;
-		}
+		}	
 		
-		//蛋白質攝取量
-		var goal_p_cal = weight*protein*p_cal;
+		calories.goal_protein_cal = body_info.weight * protein * calories.protein;
 		
-		switch (goal) {
+		switch (body_info.goal) {
 			case "1":
-				c_rt = 0.7;						
-				p_rt = (goal_p_cal/TDEE).toFixed(2);
-				f_rt = (1 - c_rt - p_rt).toFixed(2);
+				calories_rt.carbohydrate = 0.7;						
+				calories_rt.protein = (calories.goal_protein_cal/body_info.TDEE).toFixed(2);
+				calories_rt.fat = (1 - calories_rt.carbohydrate - calories_rt.protein).toFixed(2);
 				break;
 			case "2":
-				p_rt = (goal_p_cal/TDEE).toFixed(2);
-				f_rt = 0.25;
-				c_rt = (1 - f_rt - p_rt).toFixed(2);
+				calories_rt.protein = (calories.goal_protein_cal/body_info.TDEE).toFixed(2);
+				calories_rt.fat = 0.25;
+				calories_rt.carbohydrate = (1 - calories_rt.fat - calories_rt.protein).toFixed(2);
 				break;
 			default:
 				break;
 		}	
 		
-		document.getElementById("txt_bmr").value = BMR.toFixed(2);
-		document.getElementById("txt_tdee").value = TDEE.toFixed(2);		
+		document.getElementById("txt_bmr").value = body_info.BMR.toFixed(2);
+		document.getElementById("txt_tdee").value = body_info.TDEE.toFixed(2);		
 		
-		document.getElementById("div_cho_all_rt").innerHTML = (c_rt*100).toFixed() + "%";
-		document.getElementById("div_fat_all_rt").innerHTML = (f_rt*100).toFixed() + "%";
-		document.getElementById("div_pot_all_rt").innerHTML = (p_rt*100).toFixed() + "%";
+		document.getElementById("div_cho_all_rt").innerHTML = (calories_rt.carbohydrate * 100).toFixed() + "%";
+		document.getElementById("div_fat_all_rt").innerHTML = (calories_rt.fat * 100).toFixed() + "%";
+		document.getElementById("div_pot_all_rt").innerHTML = (calories_rt.protein * 100).toFixed() + "%";
 		
-		document.getElementById("div_cho_rt").innerHTML = (TDEE * c_rt).toFixed(2);
-		document.getElementById("div_fat_rt").innerHTML = (TDEE * f_rt).toFixed(2);
-		document.getElementById("div_pot_rt").innerHTML = goal_p_cal.toFixed(2);
+		document.getElementById("div_cho_rt").innerHTML = (body_info.TDEE * calories_rt.carbohydrate).toFixed(2);
+		document.getElementById("div_fat_rt").innerHTML = (body_info.TDEE * calories_rt.fat).toFixed(2);
+		document.getElementById("div_pot_rt").innerHTML = calories.goal_protein_cal.toFixed(2);
 		
-		document.getElementById("div_cho_cal").innerHTML = ((TDEE * c_rt)/4).toFixed(2);
-		document.getElementById("div_fat_cal").innerHTML = ((TDEE * f_rt)/9).toFixed(2);
-		document.getElementById("div_pot_cal").innerHTML = (goal_p_cal/4).toFixed(2);
+		document.getElementById("div_cho_cal").innerHTML = ((body_info.TDEE * calories_rt.carbohydrate)/4).toFixed(2);
+		document.getElementById("div_fat_cal").innerHTML = ((body_info.TDEE * calories_rt.fat)/9).toFixed(2);
+		document.getElementById("div_pot_cal").innerHTML = (calories.goal_protein_cal/4).toFixed(2);
 	}	
 </script>
