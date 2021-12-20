@@ -170,34 +170,64 @@ Ion Water</div><div style="position: absolute; right: 0px; width: 0px; top: 0px;
 	var protein = 1.6;
 	
 	// 營養素卡路里
-	var calories = new Object();
-	calories.carbohydrate = 4; 
-	calories.protein = 4;
-	calories.fat = 9;
-	// 蛋白質攝取量
-	calories.goal_protein_cal = 2000;
+	var calories = {
+		carbohydrate: 4,
+		protein: 4,
+		fat: 9		
+	}
 	
 	// 營養素比例
-	var calories_rt = new Object();
-	calories_rt.carbohydrate = 0.4; 
-	calories_rt.protein = 0.3;
-	calories_rt.fat = 0.3;
+	var calories_rt = {
+		carbohydrate: 0.4,
+		protein: 0.3,
+		fat: 0.3
+	}
 	
-	var body_info = new Object();
-	// 身高
-	body_info.height = 1;
-	// 體重
-	body_info.weight = 1;
-	// 年齡
-	body_info.age = 1;       
-	// 性別
-	body_info.gender = 0;    
-	//活動度
-	body_info.activity_level = 1;
-	//目標
-	body_info.goal = 1;
-	body_info.BMR = 1;
-	body_info.TDEE = 1;
+	var body_info = {
+		// 身高
+		height: 1,
+		// 體重
+		weight: 1,
+		// 年齡
+		age: 1,
+		// 性別
+		gender: 0,
+		//活動度
+		activity_level: 1,
+		//目標
+		goal: 1,		
+		//基礎代謝
+		get BMR() {
+			return 9.99 * this.weight + 6.25 * this.height - 4.92 * this.age + (166 * this.gender) - 161;
+		},
+		get TDEE() {
+			return this.BMR * this.activity_level;
+		},
+		get protein(){
+			var p = 1.6;
+			switch (this.activity_level) {
+			  case "1.2": //幾乎不運動
+				p = 1;
+				break;
+			  case "1.375": //輕鬆運動每週 1-3 天
+				p = 1.4;
+				break;
+			  case "1.55": //中強度運動每週 3-5 天
+				p = 1.6;
+				break;
+			  case "1.72": //高強度運動每週 6-7 天
+				p = 1.8;
+				break;
+			  case "1.9": //長時間運動或體力勞動工作
+				p = 2;
+				break;
+			  default:
+				p = 1.6;
+				break;
+			}	
+			return p;
+		}
+	}
 	
 	function calculate(){			
 		body_info.height = document.getElementById("txt_height").value;		
@@ -207,43 +237,17 @@ Ion Water</div><div style="position: absolute; right: 0px; width: 0px; top: 0px;
 		body_info.activity_level = document.querySelector('input[name="rdo_activity_level"]:checked').value;		
 		body_info.goal = document.querySelector('input[name="rdo_goal"]:checked').value;
 		
-		//基礎代謝
-		body_info.BMR = 9.99 * body_info.weight + 6.25 * body_info.height - 4.92 * body_info.age + (166 * body_info.gender) - 161;
-		
-		//每日總消耗熱量
-		body_info.TDEE = body_info.BMR * body_info.activity_level;		
-		
-		switch (body_info.activity_level) {
-		  case "1.2": //幾乎不運動
-			protein = 1;
-			break;
-		  case "1.375": //輕鬆運動每週 1-3 天
-			protein = 1.4;
-			break;
-		  case "1.55": //中強度運動每週 3-5 天
-			protein = 1.6;
-			break;
-		  case "1.72": //高強度運動每週 6-7 天
-			protein = 1.8;
-			break;
-		  case "1.9": //長時間運動或體力勞動工作
-			protein = 2;
-			break;
-		  default:
-			protein = 1.6;
-			break;
-		}	
-		
-		calories.goal_protein_cal = body_info.weight * protein * calories.protein;
+		// 目標蛋白質攝取量的卡路里
+		var goal_protein_cal = body_info.weight * body_info.protein * calories.protein;
 		
 		switch (body_info.goal) {
 			case "1":
 				calories_rt.carbohydrate = 0.7;						
-				calories_rt.protein = (calories.goal_protein_cal/body_info.TDEE).toFixed(2);
+				calories_rt.protein = (goal_protein_cal/body_info.TDEE).toFixed(2);
 				calories_rt.fat = (1 - calories_rt.carbohydrate - calories_rt.protein).toFixed(2);
 				break;
 			case "2":
-				calories_rt.protein = (calories.goal_protein_cal/body_info.TDEE).toFixed(2);
+				calories_rt.protein = (goal_protein_cal/body_info.TDEE).toFixed(2);
 				calories_rt.fat = 0.25;
 				calories_rt.carbohydrate = (1 - calories_rt.fat - calories_rt.protein).toFixed(2);
 				break;
@@ -260,10 +264,10 @@ Ion Water</div><div style="position: absolute; right: 0px; width: 0px; top: 0px;
 		
 		document.getElementById("div_cho_rt").innerHTML = (body_info.TDEE * calories_rt.carbohydrate).toFixed(2);
 		document.getElementById("div_fat_rt").innerHTML = (body_info.TDEE * calories_rt.fat).toFixed(2);
-		document.getElementById("div_pot_rt").innerHTML = calories.goal_protein_cal.toFixed(2);
+		document.getElementById("div_pot_rt").innerHTML = goal_protein_cal.toFixed(2);
 		
 		document.getElementById("div_cho_cal").innerHTML = ((body_info.TDEE * calories_rt.carbohydrate)/4).toFixed(2);
 		document.getElementById("div_fat_cal").innerHTML = ((body_info.TDEE * calories_rt.fat)/9).toFixed(2);
-		document.getElementById("div_pot_cal").innerHTML = (calories.goal_protein_cal/4).toFixed(2);
+		document.getElementById("div_pot_cal").innerHTML = (goal_protein_cal/4).toFixed(2);
 	}	
 </script>
