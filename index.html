@@ -95,8 +95,8 @@
 					</div>
 					<div class="col">
 						<select id="ddl_goal" class="form-select" aria-label=".form-select-lg example">
-						  <option value="1" selected>均衡飲食</option>
-						  <option value="2">減重飲食</option>
+						  <option value="1">均衡飲食</option>
+						  <option value="2" selected>減重飲食</option>
 						  <option value="3">增肌減脂</option>
 						  <option value="4">肝醣超補</option>						  
 						  <option value="5">低碳餐</option>						  
@@ -330,19 +330,22 @@ Ion Water</div><div style="position: absolute; right: 0px; width: 0px; top: 0px;
 		document.getElementById("div_fat_all_rt").innerHTML = (calories_rt.fat * 100).toFixed() + "%";
 		document.getElementById("div_pot_all_rt").innerHTML = (calories_rt.protein * 100).toFixed() + "%";
 		
+		//蛋白質
+		document.getElementById("div_pot_rt").innerHTML = goal_protein_cal.toFixed(2);
+		document.getElementById("div_pot_cal").innerHTML = (goal_protein_cal/4).toFixed(2);				
+		
 		document.getElementById("div_cho_rt_min").innerHTML = (body_info.BMR * calories_rt.carbohydrate).toFixed(2);		
-		document.getElementById("div_fat_rt_min").innerHTML = (body_info.BMR * calories_rt.fat).toFixed(2);		
+		document.getElementById("div_fat_rt_min").innerHTML = (body_info.BMR * calories_rt.fat).toFixed(2);				
 		
 		document.getElementById("div_cho_rt").innerHTML = (body_info.TDEE * calories_rt.carbohydrate).toFixed(2);
-		document.getElementById("div_fat_rt").innerHTML = (body_info.TDEE * calories_rt.fat).toFixed(2);
-		document.getElementById("div_pot_rt").innerHTML = goal_protein_cal.toFixed(2);
+		document.getElementById("div_fat_rt").innerHTML = (body_info.TDEE * calories_rt.fat).toFixed(2);		
 		
 		document.getElementById("div_cho_cal_min").innerHTML = ((body_info.BMR * calories_rt.carbohydrate)/4).toFixed(2);
 		document.getElementById("div_fat_cal_min").innerHTML = ((body_info.BMR * calories_rt.fat)/9).toFixed(2);		
 		
 		document.getElementById("div_cho_cal").innerHTML = ((body_info.TDEE * calories_rt.carbohydrate)/4).toFixed(2);
 		document.getElementById("div_fat_cal").innerHTML = ((body_info.TDEE * calories_rt.fat)/9).toFixed(2);
-		document.getElementById("div_pot_cal").innerHTML = (goal_protein_cal/4).toFixed(2);
+		
 		
 	}	
 </script>
