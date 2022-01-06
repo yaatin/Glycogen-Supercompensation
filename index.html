@@ -3,101 +3,125 @@
 	<head>			
     	<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="啾蒂煩惱於要吃多少食物可以跑完全馬不痛；運動人該怎麼吃才夠力氣訓練進步。健康吃健康瘦理念製作的計算機">
+		<meta name="description" content="啾蒂煩惱於要吃多少食物可以跑完全馬不痛不胖；運動人該怎麼吃才夠力氣訓練進步。健康吃健康瘦理念製作的計算機">
 
     	<!-- Bootstrap CSS -->
-    	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+		<link rel="canonical" href="https://getbootstrap.com/docs/5.1/layout/grid/">
+    	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">		
 		<!-- Bootstrap Javascript -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 		<title>目標熱量計算機</title>		
 		<style>
+			/* Variables */
+			.blog-article h2 {
+			  font-family: 'PT Sans', Helvetica, Arial, sans-serif;
+			  color: #555555;
+			}
+
+			/* Mixins */
+			.gray-background {
+			  background: #EEEEEE;
+			}			
+
 			body{
 				padding: 10px 50px 50px 30px;
 			}	
 			
-			.container {				
-				overflow: auto;
-				white-space: nowrap;
-			  }
-			
-			.lable {								
-				display: inline-block;
-			}			
 		</style>
 	</head>
 	<body>		
 
 		<h1>目標熱量計算</h1>
 		
-		<table class="table table-striped table-sm"> 
-			<tr>
-				<td>基礎代謝(BMR)</td>
-				<td> 
-					<input type="text" id="txt_bmr" name="txt_bmr" value="" style="background-color:#FFD382;">					
-					<input type="radio" id="rdo_auto" name="rdo_auto" value="0" checked>
+		<div class="container">
+			<div>
+				<div class="row gray-background">
+					<div class="col">
+						<input type="radio" id="rdo_auto" name="rdo_auto" value="0" checked>
 						<label>計算</label>
 						<input type="radio" id="rdo_auto" name="rdo_auto" value="1">
-						<label>手動填寫</label>  
-				</td>
-				<td>每日總消耗熱量(TDEE)</td>
-				<td>
-					<input type="text" id="txt_tdee" name="txt_tdee" value="" style="background-color:#FFD382;">					
-					<div id="div_tdee" style="background-color:#FFD382;"></div>
-				</td>
-			</tr>
-			<tr>
-				<td>性別</td>
-				<td>				
-					<input type="radio" id="rdo_gender" name="rdo_gender" value="0" checked>
-					<label>女生</label>
-					<input type="radio" id="rdo_gender" name="rdo_gender" value="1">
-					<label>男生</label>  
-				</td>								
-				<td rowspan="4">日常活動等級</td>
-				<td rowspan="4">								
-					<input type="radio" id="rdo_activity_level" name="rdo_activity_level" value="1.2">
-					<label>坐著工作 (幾乎不運動)</label><br />
-					<input type="radio" id="rdo_activity_level" name="rdo_activity_level" value="1.375" checked>
-					<label>偶爾運動 (輕鬆運動每週 1-3 天)</label><br />
-					<input type="radio" id="rdo_activity_level" name="rdo_activity_level" value="1.55">
-					<label>常常運動 (中強度運動每週 3-5 天)</label><br />
-					<input type="radio" id="rdo_activity_level" name="rdo_activity_level" value="1.72">
-					<label>每天運動 (高強度運動每週 6-7 天)</label><br />
-					<input type="radio" id="rdo_activity_level" name="rdo_activity_level" value="1.9">
-					<label>強度運動 (長時間運動或體力勞動工作)</label><br />				
-				</td></td>
-			</tr>
-			<tr>
-				<td>身高(cm)</td>
-				<td>
-					<input type="text" id="txt_height" name="txt_height" value="">
-				</td>
-			</tr>
-			<tr>
-				<td>體重(kg)</td>
-				<td><input type="text" id="txt_weight" name="txt_weight" value=""></td>
-			</tr>
-			<tr>
-				<td>年齡:</td>
-				<td><input type="text" id="txt_age" name="txt_age" value=""></td>
-			</tr>			
-			<tr>
-				<td>目標:</td>
-				<td>					
-					<input type="radio" id="rdo_goal" name="rdo_goal" value="1" checked>
-					<label>均衡飲食</label><br />
-					<input type="radio" id="rdo_goal" name="rdo_goal" value="2" >
-					<label>減重飲食</label><br />					
-					<input type="radio" id="rdo_goal" name="rdo_goal" value="3" >
-					<label>增肌減脂</label><br />
-					<input type="radio" id="rdo_goal" name="rdo_goal" value="4" >
-					<label>肝醣超補</label><br />
-				</td>			
-			</tr>
-			<tr>				
-				<td colspan="4"><center><input type="button" id="btn_calculate" name="btn_calculate" value="計算" onclick="calculate()"></center></td>
-			</tr>
-		</table>
+						<label>手動填寫</label> 
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+					  基礎代謝(BMR)
+					</div>
+					<div class="col">
+						<input type="text" id="txt_bmr" name="txt_bmr" value="" style="background-color:#FFD382;" class="form-control">										
+					</div>
+					<div class="col">
+					  每日總消耗熱量(TDEE)
+					</div>
+					<div class="col">
+					  <input type="text" id="txt_tdee" name="txt_tdee" value="" style="background-color:#FFD382;" class="form-control">					
+						<div id="div_tdee" style="background-color:#FFD382;"></div>
+					</div>
+				</div>
+				<div class="row gray-background">
+					<div class="col">
+					  性別
+					</div>
+					<div class="col">
+						<input type="radio" id="rdo_gender" name="rdo_gender" value="0" checked>
+						<label>女生</label>
+						<input type="radio" id="rdo_gender" name="rdo_gender" value="1">
+						<label>男生</label>  
+					</div>
+					<div class="col">
+					  年齡
+					</div>
+					<div class="col">
+						<input type="text" class="form-control" id="txt_age" name="txt_age" value="36" class="form-control">						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+					  身高(cm)
+					</div>
+					<div class="col">
+					  <input type="text" id="txt_height" name="txt_height" value="158" class="form-control">
+					</div>
+					<div class="col">
+					  體重(kg)
+					</div>
+					<div class="col">
+					  <input type="text" id="txt_weight" name="txt_weight" value="54" class="form-control">
+					</div>
+				</div>
+				<div class="row gray-background">
+					<div class="col">
+					  目標:
+					</div>
+					<div class="col">
+						<select id="ddl_goal" class="form-select" aria-label=".form-select-lg example">
+						  <option value="1">均衡飲食</option>
+						  <option value="2" selected>減重飲食</option>
+						  <option value="3">增肌減脂</option>
+						  <option value="4">肝醣超補</option>						  
+						  <option value="5">低碳餐</option>						  
+						</select>						  
+					</div>
+					<div class="col">
+					  日常活動等級
+					</div>
+					<div class="col">
+						<select id="ddl_activity_level" class="form-select" aria-label=".form-select-lg example">
+						  <option value="1.2">坐著工作 (幾乎不運動)</option>
+						  <option value="1.375" selected>偶爾運動 (輕鬆運動每週 1-3 天)</option>
+						  <option value="1.55">常常運動 (中強度運動每週 3-5 天)</option>
+						  <option value="1.72">每天運動 (高強度運動每週 6-7 天)</option>
+						  <option value="1.9">強度運動 (長時間運動或體力勞動工作)</option>						  
+						</select>					  	
+					</div>					
+				</div>
+				<div class="row">
+					<div class="col">
+					  <center><input type="button" id="btn_calculate" name="btn_calculate" value="計算" onclick="calculate()"></center>
+					</div>				
+				</div>			
+			</div>	
+		</div>
 		
 		<br/>			
 		
@@ -223,16 +247,14 @@ Ion Water</div><div style="position: absolute; right: 0px; width: 0px; top: 0px;
 					return 66 + 13.7*this.weight + 5*this.height - 6.8*this.age;
 			}else{
 				return parseFloat(document.getElementById("txt_bmr").value);		
-			}
-			//return 9.99 * this.weight + 6.25 * this.height - 4.92 * this.age + (166 * this.gender) - 161;
+			}			
 		},
 		get TDEE() {
-			if(this.auto == 0)
-			{
+			if(this.auto == 0)			
 				return this.BMR * this.activity_level;
-			}else{
-				return parseFloat(document.getElementById("txt_tdee").value);		
-			}
+			
+			return parseFloat(document.getElementById("txt_tdee").value);		
+			
 		},
 		get protein(){
 			var p = 1.6; //蛋白質與體重的比例
@@ -266,36 +288,38 @@ Ion Water</div><div style="position: absolute; right: 0px; width: 0px; top: 0px;
 		body_info.weight = document.getElementById("txt_weight").value;		
 		body_info.age = document.getElementById("txt_age").value;		
 		body_info.gender = document.querySelector('input[name="rdo_gender"]:checked').value;
-		body_info.activity_level = document.querySelector('input[name="rdo_activity_level"]:checked').value;		
-		body_info.goal = document.querySelector('input[name="rdo_goal"]:checked').value;
+		body_info.activity_level = document.getElementById("ddl_activity_level").value;		
+		body_info.goal = document.getElementById("ddl_goal").value;		
+		
+		var goal_protein_cal = body_info.weight * body_info.protein * calories.protein;
+		calories_rt.protein = goal_protein_cal / body_info.TDEE;
+		calories_rt.carbohydrate = (body_info.weight * calories.carbohydrate)/body_info.BMR;	
 		
 		switch (body_info.goal) {
-			case "1": //均衡飲食
-				calories_rt.protein = 0.2;				
-				calories_rt.fat = 0.3;				
-				calories_rt.carbohydrate = 0.5;				
+			case "1": //均衡飲食				
+				calories_rt.fat = 0.3 + (0.2-calories_rt.protein)/2;				
+				calories_rt.carbohydrate = 0.5 + (0.2-calories_rt.protein)/2;				
 				break;
-			case "2": //減重飲食
-				calories_rt.protein = 0.25;				
-				calories_rt.fat = 0.3;				
-				calories_rt.carbohydrate = 0.45;				
+			case "2": //減重飲食				
+				calories_rt.fat = 0.3 + (0.25-calories_rt.protein)/2;				
+				calories_rt.carbohydrate = 0.45 + (0.25-calories_rt.protein)/2;
 				break;
-			case "3": //增肌減脂
-				calories_rt.protein = 0.175;								
-				calories_rt.fat = 0.275;				
-				calories_rt.carbohydrate = 0.55;				
+			case "3": //增肌減脂				
+				calories_rt.fat = 0.275 + (0.175-calories_rt.protein)/2;				
+				calories_rt.carbohydrate = 0.55 + (0.175-calories_rt.protein)/2;				
 				break;				
 			case "4": //肝醣超補
-				calories_rt.carbohydrate = 0.7;						
-				calories_rt.protein = 0.2; // goal_protein_cal/body_info.TDEE;
-				calories_rt.fat = 0.1;//1 - calories_rt.carbohydrate_min - calories_rt.protein_min;
-				break;
-			
+				calories_rt.carbohydrate = 0.7;										
+				calories_rt.fat = 1 - 0.7 - calories_rt.protein;
+				break;		
+			case "5": //低碳餐				
+				calories_rt.fat = 1 - calories_rt.carbohydrate - calories_rt.protein;
+				break;				
 			default:
 				break;
 		}
 		
-		var goal_protein_cal = body_info.weight * body_info.protein * calories.protein;
+		
 		
 		if(body_info.auto == 0){
 			document.getElementById("txt_bmr").value = body_info.BMR.toFixed(2);
